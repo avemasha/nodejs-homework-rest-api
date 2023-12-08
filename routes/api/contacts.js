@@ -35,7 +35,8 @@ router.get("/:contactId", async (req, res, next) => {
   }
 });
 
-router.post("/contacts", (req, res) => {
+router.post("/", async (req, res) => {
+  const { name, email, phone } = req.body;
   const { error } = contactSchema.validate(req.body);
 
   if (error) {
@@ -43,7 +44,7 @@ router.post("/contacts", (req, res) => {
     return;
   }
 
-  const newContact = addContact(req.body);
+  const newContact = await addContact({ name, email, phone });
   res.status(201).json(newContact);
 });
 
@@ -61,8 +62,10 @@ router.delete("/:contactId", async (req, res, next) => {
   }
 });
 
-router.put("/contacts/:id", (req, res) => {
+router.put("/contacts/:id", async (req, res) => {
   const { id } = req.params;
+  const { name, email, phone } = req.body;
+
   const { error } = contactSchema.validate(req.body);
 
   if (error) {
@@ -70,10 +73,10 @@ router.put("/contacts/:id", (req, res) => {
     return;
   }
 
-  const updatedContact = updateContact(id, req.body);
+  const updatedContact = await updateContact(id, { name, email, phone });
 
   if (updatedContact) {
-    res.json(updatedContact);
+    res.status(200).json(updatedContact);
   } else {
     res.status(404).json({ message: "Not found" });
   }
