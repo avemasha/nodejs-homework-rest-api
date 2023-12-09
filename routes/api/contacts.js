@@ -36,16 +36,21 @@ router.get("/:contactId", async (req, res, next) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, email, phone } = req.body;
-  const { error } = contactSchema.validate(req.body);
+  try {
+    const { name, email, phone } = req.body;
+    const { error } = contactSchema.validate(req.body);
 
-  if (error) {
-    res.status(400).json({ message: error.details[0].message });
-    return;
+    if (error) {
+      res.status(400).json({ message: error.details[0].message });
+      return;
+    }
+
+    const newContact = await addContact({ name, email, phone });
+    res.status(201).json(newContact);
+  } catch (error) {
+    console.error("Error handling the POST request:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-
-  const newContact = await addContact({ name, email, phone });
-  res.status(201).json(newContact);
 });
 
 router.delete("/:contactId", async (req, res, next) => {

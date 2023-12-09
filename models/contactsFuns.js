@@ -44,9 +44,10 @@ const removeContact = async (contactId) => {
   return false;
 };
 
-const addContact = async ({ name, email, phone }) => {
+const addContact = async (body) => {
   try {
     const contacts = await readContactsFile();
+    const { name, email, phone } = body;
 
     const newContact = {
       id: nanoid(),
@@ -55,9 +56,8 @@ const addContact = async ({ name, email, phone }) => {
       phone,
     };
 
-    const updatedContacts = [...contacts, newContact];
-
-    await writeContactsFile(updatedContacts);
+    contacts.push(newContact);
+    await writeContactsFile(contacts);
 
     return newContact;
   } catch (error) {
