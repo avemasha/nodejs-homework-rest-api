@@ -69,13 +69,15 @@ const addContact = async (body) => {
 const updateContact = async (contactId, body) => {
   const contacts = await readContactsFile();
   const index = contacts.findIndex((contact) => contact.id === contactId);
+  console.log("Updating contact with ID:", contactId);
+  console.log("Original contacts:", contacts);
 
   if (index !== -1) {
     contacts[index] = { ...contacts[index], ...body };
     await writeContactsFile(contacts);
     return contacts[index];
   }
-
+  console.log("Updated contacts:", contacts);
   return null;
 };
 

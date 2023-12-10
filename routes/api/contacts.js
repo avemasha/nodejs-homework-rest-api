@@ -67,9 +67,12 @@ router.delete("/:contactId", async (req, res, next) => {
   }
 });
 
-router.put("/contacts/:id", async (req, res) => {
+router.put("/api/contacts/:id", async (req, res) => {
   const { id } = req.params;
   const { name, email, phone } = req.body;
+
+  console.log("Updating contact with ID:", id);
+  console.log("Request Body:", req.body);
 
   const { error } = contactSchema.validate(req.body);
 
@@ -81,9 +84,9 @@ router.put("/contacts/:id", async (req, res) => {
   const updatedContact = await updateContact(id, { name, email, phone });
 
   if (updatedContact) {
-    res.status(200).json(updatedContact);
+    return res.status(200).json(updatedContact);
   } else {
-    res.status(404).json({ message: "Not found" });
+    return res.status(404).json({ message: "Not found" });
   }
 });
 
