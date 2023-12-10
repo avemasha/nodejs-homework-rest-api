@@ -41,7 +41,7 @@ router.post("/", async (req, res) => {
     const { error } = contactSchema.validate(req.body);
 
     if (error) {
-      res.status(400).json({ message: error.details[0].message });
+      res.status(400).json({ message: error.message });
       return;
     }
 
@@ -74,7 +74,7 @@ router.put("/contacts/:id", async (req, res) => {
   const { error } = contactSchema.validate(req.body);
 
   if (error) {
-    res.status(400).json({ message: error.details[0].message });
+    res.status(400).json({ message: error.message });
     return;
   }
 
