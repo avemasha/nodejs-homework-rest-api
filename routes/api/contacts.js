@@ -68,10 +68,10 @@ router.delete("/:contactId", async (req, res, next) => {
 });
 
 router.put("/:contactId", async (req, res) => {
-  const { id } = req.params;
+  const { contactId } = req.params;
   const { name, email, phone } = req.body;
 
-  console.log("Updating contact with ID:", id);
+  console.log("Updating contact with ID:", contactId);
   console.log("Request Body:", req.body);
 
   const { error } = contactSchema.validate(req.body);
@@ -81,7 +81,7 @@ router.put("/:contactId", async (req, res) => {
     return;
   }
 
-  const updatedContact = await updateContact(id, { name, email, phone });
+  const updatedContact = await updateContact(contactId, { name, email, phone });
 
   if (updatedContact) {
     return res.status(200).json(updatedContact);
