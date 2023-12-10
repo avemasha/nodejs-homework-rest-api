@@ -67,7 +67,7 @@ router.delete("/:contactId", async (req, res, next) => {
   }
 });
 
-router.put("/api/contacts/:id", async (req, res) => {
+router.put("/:contactId", async (req, res) => {
   const { id } = req.params;
   const { name, email, phone } = req.body;
 
