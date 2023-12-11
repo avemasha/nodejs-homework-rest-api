@@ -74,11 +74,14 @@ router.put("/:contactId", async (req, res) => {
   console.log("Updating contact with ID:", contactId);
   console.log("Request Body:", req.body);
 
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({ message: "Missing fields" });
+  }
+
   const { error } = contactSchema.validate(req.body);
 
   if (error) {
-    res.status(400).json({ message: error.message });
-    return;
+    return res.status(400).json({ message: error.message });
   }
 
   const updatedContact = await updateContact(contactId, { name, email, phone });
