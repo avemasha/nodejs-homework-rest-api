@@ -38,7 +38,11 @@ router.get("/:contactId", async (req, res, next) => {
 router.post("/", async (req, res) => {
   try {
     const { name, email, phone } = req.body;
-    const { error } = contactSchema.validate(req.body);
+    const { error } = contactSchema.validate(req.body, { abortEarly: false });
+
+    if (Object.keys(req.body).length === 0) {
+      return res.status(400).json({ message: "Missing fields" });
+    }
 
     if (error) {
       res.status(400).json({ message: error.message });
@@ -78,7 +82,7 @@ router.put("/:contactId", async (req, res) => {
     return res.status(400).json({ message: "Missing fields" });
   }
 
-  const { error } = contactSchema.validate(req.body);
+  const { error } = contactSchema.validate(req.body, { abortEarly: false });
 
   if (error) {
     return res.status(400).json({ message: error.message });
