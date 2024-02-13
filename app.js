@@ -7,6 +7,7 @@ const authRouter = require("./routes/api/auth");
 const usersRouter = require("./routes/api/users");
 
 const app = express();
+const path = require("path");
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
@@ -17,6 +18,8 @@ app.use(express.json());
 app.use("/contacts", contactsRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });

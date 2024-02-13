@@ -28,6 +28,9 @@ const userSchema = new Schema(
       type: [Schema.Types.ObjectId],
       ref: "contact",
     },
+    avatarURL: {
+      type: String,
+    },
   },
   {
     timestamps: true,
