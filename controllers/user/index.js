@@ -4,11 +4,9 @@ const getInfo = require("./getInfo");
 const currentUser = require("./currentUser");
 const logout = require("./logout");
 const updateStatusContact = require("./updateSubs");
-const addAvatar = require("./addAvatar");
+const uploadAvatar = require("./uploadAvatar");
 
-const {
-  regControllerWrapper,
-} = require("../../controllers/auth/regControllerWrapper");
+const { regControllerWrapper } = require("../auth/regControllerWrapper");
 
 module.exports = {
   addContact: regControllerWrapper(addContact),
@@ -17,5 +15,5 @@ module.exports = {
   currentUser: regControllerWrapper(currentUser),
   logout: regControllerWrapper(logout),
   updateStatusContact: regControllerWrapper(updateStatusContact),
-  addAvatar: addAvatar,
+  uploadAvatar: regControllerWrapper(uploadAvatar),
 };

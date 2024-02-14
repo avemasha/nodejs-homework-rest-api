@@ -14,8 +14,8 @@ router.patch("", authMiddleware, userController.updateStatusContact);
 router.patch(
   "/avatars",
   authMiddleware,
-  upload.single("avatar"),
-  userController.addAvatar
+  upload.single("image"),
+  userController.uploadAvatar
 );
 
 module.exports = router;
