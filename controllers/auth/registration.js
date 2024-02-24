@@ -8,10 +8,6 @@ dotenv.config();
 
 const { EMAIL_API_USER, EMAIL_API_PASSWORD } = process.env;
 
-function generateVerificationToken() {
-  return uuidv4();
-}
-
 const registration = async (req, res, next) => {
   const { error } = User.validate(req.body);
   if (error) {
@@ -25,7 +21,7 @@ const registration = async (req, res, next) => {
     return res.status(409).json({ message: "Email in use" });
   }
 
-  const verificationToken = generateVerificationToken();
+  const verificationToken = uuidv4();
   console.log(verificationToken);
 
   const hashedPassword = await bcrypt.hash(password, 10);
