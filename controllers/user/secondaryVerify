@@ -1,4 +1,11 @@
 const User = require("../../models/users");
+const { v4: uuidv4 } = require("uuid");
+const nodemailer = require("nodemailer");
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { EMAIL_API_USER, EMAIL_API_PASSWORD } = process.env;
 
 const secondaryVerify = async (req, res) => {
   const { email } = req.body;
@@ -18,9 +25,7 @@ const secondaryVerify = async (req, res) => {
       .status(400)
       .json({ message: "Verification has already been passed" });
   }
-
   const verificationToken = uuidv4();
-
   user.verificationToken = verificationToken;
   await user.save();
 
