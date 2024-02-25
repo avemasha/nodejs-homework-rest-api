@@ -9,11 +9,6 @@ dotenv.config();
 const { EMAIL_API_USER, EMAIL_API_PASSWORD } = process.env;
 
 const registration = async (req, res, next) => {
-  const { error } = User.validate(req.body);
-  if (error) {
-    return res.status(400).json({ error: error.details[0].message });
-  }
-
   const { email, password } = req.body;
 
   const existingUser = await User.findOne({ email });
